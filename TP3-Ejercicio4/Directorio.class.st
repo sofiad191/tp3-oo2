@@ -63,7 +63,7 @@ Directorio >> tamaño [
 { #category : #operations }
 Directorio >> tamañoTotalOcupado [
 	"Retorna el espacio total ocupado en KB, incluyendo su contenido"
-	
+	^ 0
 
 	
 ]

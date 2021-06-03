@@ -33,9 +33,21 @@ Directorio >> archivoMasNuevo [
 	^ contenido detectMin: [ :d | d esDirectorio ifTrue: [ d contenido detectMin: [ :ar | ar archivoMasNuevo ] ] ifFalse: [ :a | a fechaCreacion ] ]
 ]
 
+{ #category : #'as yet unclassified' }
+Directorio >> archivos [
+^ contenido reject: [ :arch | arch esDirectorio  ]
+
+]
+
 { #category : #accessing }
 Directorio >> contenido [
 ^contenido
+]
+
+{ #category : #'as yet unclassified' }
+Directorio >> directorio [
+^ contenido select: [ :file | file esDirectorio  ]
+
 ]
 
 { #category : #operations }
@@ -50,13 +62,14 @@ Directorio >> esDirectorio [
 
 { #category : #operations }
 Directorio >> imprimirPathEn: unString con: unNumero [
-	| tmp arc |
+	| arc tmp |
 	arc := OrderedCollection new.
 	self esDirectorio
 		ifTrue: [ tmp := unString , '/' , self nombre.
 			arc := self contenido reject: [ :a | a esDirectorio ].
 			self imprimirPathEn: tmp con: arc size ].
 	^ unString , ' (' , unNumero , ' archivos)'
+	
 ]
 
 { #category : #initialization }
@@ -69,16 +82,15 @@ Directorio >> initializeConNombre: unString yFechaCreacion: unaFecha [
 	nombre := unString.
 	fechaCreacion := unaFecha.
 	tamaño := 32.
-	contenido := OrderedCollection
+	
 ]
 
 { #category : #operations }
 Directorio >> listadoDeContenido [
-	| listado|
+	| listado |
 	listado := ''.
-	self contenido
-		do: [ :v | v imprimirPathEn: listado con: 0 ].
-	^ listado
+	^ self imprimirPathEn: listado con: 0 
+	
 ]
 
 { #category : #accessing }

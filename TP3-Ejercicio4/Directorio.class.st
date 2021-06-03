@@ -44,6 +44,11 @@ Directorio >> eliminar: unObjeto [
 ]
 
 { #category : #operations }
+Directorio >> esDirectorio [
+^True
+]
+
+{ #category : #operations }
 Directorio >> imprimirPathEn: unString con: unNumero [
 	| tmp arc |
 	arc := OrderedCollection new.
@@ -55,9 +60,8 @@ Directorio >> imprimirPathEn: unString con: unNumero [
 ]
 
 { #category : #initialization }
-Directorio >> initialize [
-	super initialize.
-	contenido := OrderedCollection new.
+Directorio >> initialize [ 
+contenido :=OrderedCollection new.
 ]
 
 { #category : #initialization }
@@ -65,6 +69,7 @@ Directorio >> initializeConNombre: unString yFechaCreacion: unaFecha [
 	nombre := unString.
 	fechaCreacion := unaFecha.
 	tamaño := 32.
+	contenido := OrderedCollection
 ]
 
 { #category : #operations }
@@ -76,13 +81,19 @@ Directorio >> listadoDeContenido [
 	^ listado
 ]
 
+{ #category : #accessing }
+Directorio >> tamaño [
+	^32
+]
+
 { #category : #operations }
 Directorio >> tamañoTotalOcupado [
 	"Retorna el espacio total ocupado en KB, incluyendo su contenido"
 
-	^ contenido
+	"contenido
 		sum: [ :v | 
 			[ v esDirectorio
 				ifTrue: [ v contenido sum: [ :ar | ar tamañoTotalOcupado ] ]
-				ifFalse: [ self tamaño ] ] ]
+				ifFalse: [ self tamaño ] ] ]."
+	^ contenido sumNumbers: [ :elem | elem tamañoTotalOcupado ] + tamaño
 ]

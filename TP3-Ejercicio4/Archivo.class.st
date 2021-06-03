@@ -11,6 +11,11 @@ Archivo class >> llamado: unString creadoEl: unaFecha kBytes: unNumero [
 		yourself
 ]
 
+{ #category : #operations }
+Archivo >> esDirectorio [
+	^False
+]
+
 { #category : #initialization }
 Archivo >> initialize [ 	
 super initialize
@@ -22,4 +27,14 @@ Archivo >> initializeConNombre: unString conFechaCreacion: unaFecha yTamaño: un
 	nombre := unString.
 	fechaCreacion := unaFecha.
 	tamaño := unNumero
+]
+
+{ #category : #accessing }
+Archivo >> tamaño [
+	^tamaño
+]
+
+{ #category : #operations }
+Archivo >> tamañoTotalOcupado [
+	^tamaño
 ]

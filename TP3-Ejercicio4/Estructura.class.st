@@ -20,7 +20,8 @@ Estructura class >> llamado: unString creadoEl: unaFecha kBytes: unNumero [
 
 { #category : #operations }
 Estructura >> esDirectorio [
-	^ tamaño = 32
+	self subclassResponsibility.
+	
 ]
 
 { #category : #accessing }
@@ -57,10 +58,15 @@ nombre := unNombre
 
 { #category : #accessing }
 Estructura >> tamaño [
-^tamaño
+	self subclassResponsibility.
 ]
 
 { #category : #accessing }
 Estructura >> tamaño: unTamaño [
 tamaño := unTamaño
+]
+
+{ #category : #operations }
+Estructura >> tamañoTotalOcupado [
+self subclassResponsibility 
 ]

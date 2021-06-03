@@ -34,8 +34,8 @@ fechaCreacion:= unaFecha
 ]
 
 { #category : #initialization }
-Estructura >> initialize [ 	
-	fechaCreacion := DateAndTime now.
+Estructura >> initialize [
+
 ]
 
 { #category : #initialization }

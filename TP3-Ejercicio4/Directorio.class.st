@@ -45,12 +45,13 @@ Directorio >> eliminar: unObjeto [
 
 { #category : #operations }
 Directorio >> imprimirPathEn: unString con: unNumero [
-	| tmp cant |
+	| tmp arc |
+	arc := OrderedCollection new.
 	self esDirectorio
 		ifTrue: [ tmp := unString , '/' , self nombre.
-			cant := cant + 1.
-			self imprimirPathEn: tmp con: cant ].
-	^ unString , ' (' , cant , ' archivos)'
+			arc := self contenido reject: [ :a | a esDirectorio ].
+			self imprimirPathEn: tmp con: arc size ].
+	^ unString , ' (' , unNumero , ' archivos)'
 ]
 
 { #category : #initialization }
@@ -68,11 +69,10 @@ Directorio >> initializeConNombre: unString yFechaCreacion: unaFecha [
 
 { #category : #operations }
 Directorio >> listadoDeContenido [
-	| listado cantidadArchivos |
-	cantidadArchivos := 0.
+	| listado|
 	listado := ''.
 	self contenido
-		do: [ :v | v imprimirPathEn: listado con: cantidadArchivos ].
+		do: [ :v | v imprimirPathEn: listado con: 0 ].
 	^ listado
 ]
 

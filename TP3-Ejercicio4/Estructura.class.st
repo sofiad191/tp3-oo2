@@ -3,10 +3,25 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'nombre',
-		'fechaCreacion'
+		'fechaCreacion',
+		'tamaño'
 	],
 	#category : #'TP3-Ejercicio4-Model'
 }
+
+{ #category : #operations }
+Estructura class >> llamado: unString creadoEl: unaFecha kBytes: unNumero [
+	^ self new
+		initializeConNombre: unString
+			conFechaCreacion: unaFecha
+			yTamaño: unNumero;
+		yourself
+]
+
+{ #category : #operations }
+Estructura >> esDirectorio [
+	^ tamaño = 32
+]
 
 { #category : #accessing }
 Estructura >> fechaCreacion [
@@ -24,14 +39,10 @@ Estructura >> initialize [
 ]
 
 { #category : #initialization }
-Estructura >> initializeConNombre: unNombre yFechaCreacion: unaFecha [
+Estructura >> initializeConNombre: unNombre conFechaCreacion: unaFecha yTamaño: unNumero [
 	nombre := unNombre.
 	fechaCreacion := unaFecha.
-]
-
-{ #category : #operations }
-Estructura >> llamado: unString creadoEl: unaFecha [
-	self initializeConNombre: unString yFechaCreacion: unaFecha 
+	tamaño := unNumero
 ]
 
 { #category : #accessing }
@@ -42,4 +53,14 @@ Estructura >> nombre [
 { #category : #accessing }
 Estructura >> nombre: unNombre [
 nombre := unNombre
+]
+
+{ #category : #accessing }
+Estructura >> tamaño [
+^tamaño
+]
+
+{ #category : #accessing }
+Estructura >> tamaño: unTamaño [
+tamaño := unTamaño
 ]

@@ -8,6 +8,13 @@ Class {
 }
 
 { #category : #operations }
+Directorio class >> llamado: unString creadoEl: unaFecha [
+	^ self new
+		initializeConNombre: unString yFechaCreacion: unaFecha ;
+		yourself
+]
+
+{ #category : #operations }
 Directorio >> agregar: unObjeto [
 	contenido add: unObjeto
 ]
@@ -16,15 +23,19 @@ Directorio >> agregar: unObjeto [
 Directorio >> archivoMasGrande [
 	"Retorna el archivo con mayor cantidad de bytes en cualquier nivel del filesystem contenido por directorio receptor."
 
-	^ contenido detectMax: [ :ar | ar tamaño ]
+	^ contenido detectMax: [ :d | d esDirectorio ifTrue: [ :ar | ar archivoMasGrande ] ifFalse: [ :a | a tamaño ] ]
 ]
 
 { #category : #operations }
 Directorio >> archivoMasNuevo [
 	"Retorna el archivo con fecha de creacion mas reciente en cualquier nivel del filesystem contenido por directorio receptor"
-	^ contenido detectMax: [ :ar | ar fechaCreacion ]
 
-	
+	^ contenido detectMin: [ :d | d esDirectorio ifTrue: [ d contenido detectMin: [ :ar | ar archivoMasNuevo ] ] ifFalse: [ :a | a fechaCreacion ] ]
+]
+
+{ #category : #accessing }
+Directorio >> contenido [
+^contenido
 ]
 
 { #category : #operations }
@@ -32,38 +43,46 @@ Directorio >> eliminar: unObjeto [
 	contenido remove: unObjeto
 ]
 
+{ #category : #operations }
+Directorio >> imprimirPathEn: unString con: unNumero [
+	| tmp cant |
+	self esDirectorio
+		ifTrue: [ tmp := unString , '/' , self nombre.
+			cant := cant + 1.
+			self imprimirPathEn: tmp con: cant ].
+	^ unString , ' (' , cant , ' archivos)'
+]
+
 { #category : #initialization }
 Directorio >> initialize [
 	super initialize.
+	contenido := OrderedCollection new.
+]
+
+{ #category : #initialization }
+Directorio >> initializeConNombre: unString yFechaCreacion: unaFecha [
+	nombre := unString.
+	fechaCreacion := unaFecha.
+	tamaño := 32.
 ]
 
 { #category : #operations }
 Directorio >> listadoDeContenido [
-"Retorna un String con el listado del contenido del directorio imprimiendo el path completo de cada elemento (Similar al comando pwd de linux) siguiendo el modelo
-presentado a continuacion:
-/DirectorioA
-/DirectorioA/Directorio A.1
-/DirectorioA/Directorio A.1/Directorio A.1.1 (3 archivos)
-/DirectorioA/Directorio A.1/Directorio A.1.2 (2 archivos)
-/DirectorioA/Directorio A.2
-/Directorio B"
-	
-]
-
-{ #category : #operations }
-Directorio >> llamado: unString creadoEl: unaFecha [
-	super llamado: unString creadoEl: unaFecha
-]
-
-{ #category : #accessing }
-Directorio >> tamaño [
-^ 32 
+	| listado cantidadArchivos |
+	cantidadArchivos := 0.
+	listado := ''.
+	self contenido
+		do: [ :v | v imprimirPathEn: listado con: cantidadArchivos ].
+	^ listado
 ]
 
 { #category : #operations }
 Directorio >> tamañoTotalOcupado [
 	"Retorna el espacio total ocupado en KB, incluyendo su contenido"
-	^ 0
 
-	
+	^ contenido
+		sum: [ :v | 
+			[ v esDirectorio
+				ifTrue: [ v contenido sum: [ :ar | ar tamañoTotalOcupado ] ]
+				ifFalse: [ self tamaño ] ] ]
 ]

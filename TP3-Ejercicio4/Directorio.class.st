@@ -33,6 +33,11 @@ Directorio >> archivoMasGrande [
 { #category : #operations }
 Directorio >> archivoMasNuevo [
 	"Retorna el archivo con fecha de creacion mas reciente en cualquier nivel del filesystem contenido por directorio receptor"
+	"^ contenido
+		detectMin: [ :d | 
+			d esDirectorio
+				ifTrue: [ d contenido detectMin: [ :ar | ar archivoMasNuevo ] ]
+				ifFalse: [ :a | a fechaCreacion ] ]"
 
 	^ contenido
 		detectMin: [ :d | 

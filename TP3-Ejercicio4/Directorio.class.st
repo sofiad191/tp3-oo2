@@ -109,11 +109,6 @@ Directorio >> tamaño [
 Directorio >> tamañoTotalOcupado [
 	"Retorna el espacio total ocupado en KB, incluyendo su contenido"
 
-	"^ contenido
-		sumNumbers: [ :v | 
-			[ v esDirectorio
-				ifTrue: [ v contenido sumNumbers: [ :ar | ar tamañoTotalOcupado ] ]
-				ifFalse: [ self tamaño ] ] ]"
-
-	^( contenido sumNumbers: [ :elem | elem tamañoTotalOcupado ]) + tamaño
+	^ (contenido sumNumbers: [ :elem | elem tamañoTotalOcupado ])
+		+ tamaño
 ]

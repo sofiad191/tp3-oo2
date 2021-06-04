@@ -24,7 +24,7 @@ Directorio >> archivoMasGrande [
 	"Retorna el archivo con mayor cantidad de bytes en cualquier nivel del filesystem contenido por directorio receptor."
 
 	^ contenido
-		detectMax: [ :d | 
+		detectMin: [ :d | 
 			d esDirectorio
 				ifTrue: [ d archivoMasGrande ]
 				ifFalse: [ d tamaño ] ]
@@ -36,9 +36,9 @@ Directorio >> archivoMasNuevo [
 
 	^ contenido
 		detectMin: [ :d | 
-			 d esDirectorio
-				ifTrue: [ d contenido detectMin: [ :ar | ar archivoMasNuevo ] ]
-				ifFalse: [ :a | a fechaCreacion ] ]
+			d esDirectorio
+				ifTrue: [ d archivoMasNuevo ]
+				ifFalse: [ d fechaCreacion ] ]
 ]
 
 { #category : #operations }

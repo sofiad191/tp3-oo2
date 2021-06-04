@@ -25,9 +25,9 @@ Directorio >> archivoMasGrande [
 
 	^ contenido
 		detectMax: [ :d | 
-			[ d esDirectorio
-				ifTrue: [ :ar | ar archivoMasGrande ]
-				ifFalse: [ :a | a tamaño ]] ]
+			d esDirectorio
+				ifTrue: [ d archivoMasGrande ]
+				ifFalse: [ d tamaño ] ]
 ]
 
 { #category : #operations }
@@ -36,9 +36,9 @@ Directorio >> archivoMasNuevo [
 
 	^ contenido
 		detectMin: [ :d | 
-			[ d esDirectorio
+			 d esDirectorio
 				ifTrue: [ d contenido detectMin: [ :ar | ar archivoMasNuevo ] ]
-				ifFalse: [ :a | a fechaCreacion ] ] ]
+				ifFalse: [ :a | a fechaCreacion ] ]
 ]
 
 { #category : #operations }

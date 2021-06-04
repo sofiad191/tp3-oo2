@@ -66,17 +66,18 @@ DirectorioTest >> testArchivoMasGrande [
 	archivo := conVariosArchivos archivoMasGrande.
 	self assert: archivo equals: grande.
 	archivo := conSubdirectorios archivoMasGrande.
-	self assert: archivo equals: backup2015.
+	self assert: archivo equals: backup2015
 ]
 
 { #category : #tests }
 DirectorioTest >> testArchivoMasNuevo [
 	| archivo |
+	archivo := conUnArchivo archivoMasNuevo.
+	self assert: archivo equals: config.
 	archivo := conVariosArchivos archivoMasNuevo.
 	self assert: archivo equals: grande.
 	archivo := conSubdirectorios archivoMasNuevo.
 	self assert: archivo equals: backup2015
-	
 ]
 
 { #category : #running }

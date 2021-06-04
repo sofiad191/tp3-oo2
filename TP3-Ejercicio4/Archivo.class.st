@@ -13,7 +13,7 @@ Archivo class >> llamado: unString creadoEl: unaFecha kBytes: unNumero [
 
 { #category : #operations }
 Archivo >> esDirectorio [
-	^False
+	^ false
 ]
 
 { #category : #initialization }

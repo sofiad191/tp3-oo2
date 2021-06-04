@@ -23,17 +23,25 @@ Directorio >> agregar: unObjeto [
 Directorio >> archivoMasGrande [
 	"Retorna el archivo con mayor cantidad de bytes en cualquier nivel del filesystem contenido por directorio receptor."
 
-	^ contenido detectMax: [ :d | d esDirectorio ifTrue: [ :ar | ar archivoMasGrande ] ifFalse: [ :a | a tamaño ] ]
+	^ contenido
+		detectMax: [ :d | 
+			[ d esDirectorio
+				ifTrue: [ :ar | ar archivoMasGrande ]
+				ifFalse: [ :a | a tamaño ]] ]
 ]
 
 { #category : #operations }
 Directorio >> archivoMasNuevo [
 	"Retorna el archivo con fecha de creacion mas reciente en cualquier nivel del filesystem contenido por directorio receptor"
 
-	^ contenido detectMin: [ :d | d esDirectorio ifTrue: [ d contenido detectMin: [ :ar | ar archivoMasNuevo ] ] ifFalse: [ :a | a fechaCreacion ] ]
+	^ contenido
+		detectMin: [ :d | 
+			[ d esDirectorio
+				ifTrue: [ d contenido detectMin: [ :ar | ar archivoMasNuevo ] ]
+				ifFalse: [ :a | a fechaCreacion ] ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #operations }
 Directorio >> archivos [
 ^ contenido reject: [ :arch | arch esDirectorio  ]
 
@@ -44,7 +52,7 @@ Directorio >> contenido [
 ^contenido
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #operations }
 Directorio >> directorio [
 ^ contenido select: [ :file | file esDirectorio  ]
 
@@ -57,7 +65,7 @@ Directorio >> eliminar: unObjeto [
 
 { #category : #operations }
 Directorio >> esDirectorio [
-^True
+	^ true
 ]
 
 { #category : #operations }
@@ -102,10 +110,11 @@ Directorio >> tamaño [
 Directorio >> tamañoTotalOcupado [
 	"Retorna el espacio total ocupado en KB, incluyendo su contenido"
 
-	"contenido
-		sum: [ :v | 
+	"^ contenido
+		sumNumbers: [ :v | 
 			[ v esDirectorio
-				ifTrue: [ v contenido sum: [ :ar | ar tamañoTotalOcupado ] ]
-				ifFalse: [ self tamaño ] ] ]."
-	^ contenido sumNumbers: [ :elem | elem tamañoTotalOcupado ] + tamaño
+				ifTrue: [ v contenido sumNumbers: [ :ar | ar tamañoTotalOcupado ] ]
+				ifFalse: [ self tamaño ] ] ]"
+
+	^( contenido sumNumbers: [ :elem | elem tamañoTotalOcupado ]) + tamaño
 ]

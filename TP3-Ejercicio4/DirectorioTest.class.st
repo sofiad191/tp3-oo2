@@ -58,6 +58,27 @@ DirectorioTest >> setUp [
 						yourself)
 ]
 
+{ #category : #tests }
+DirectorioTest >> testArchivoMasGrande [
+	| archivo |
+	archivo := conUnArchivo archivoMasGrande.
+	self assert: archivo equals: config.
+	archivo := conVariosArchivos archivoMasGrande.
+	self assert: archivo equals: grande.
+	archivo := conSubdirectorios archivoMasGrande.
+	self assert: archivo equals: backup2015.
+]
+
+{ #category : #tests }
+DirectorioTest >> testArchivoMasNuevo [
+	| archivo |
+	archivo := conVariosArchivos archivoMasNuevo.
+	self assert: archivo equals: grande.
+	archivo := conSubdirectorios archivoMasNuevo.
+	self assert: archivo equals: backup2015
+	
+]
+
 { #category : #running }
 DirectorioTest >> testListadoDeContenido [
 	| listado listadoStream|
@@ -71,4 +92,15 @@ DirectorioTest >> testListadoDeContenido [
 	listadoStream << '/log/postgres (3 archivos)'.
 	listado := listadoStream contents.
 	self assert: conSubdirectorios listadoDeContenido = listado
+]
+
+{ #category : #tests }
+DirectorioTest >> testTamañoTotalOcupado [
+	| tam |
+	tam := conUnArchivo tamañoTotalOcupado.
+	self assert: tam equals: 160.
+	tam := conVariosArchivos tamañoTotalOcupado.
+	self assert: tam equals: 2010042.
+	tam := conSubdirectorios tamañoTotalOcupado.
+	self assert: tam equals: 256690128
 ]

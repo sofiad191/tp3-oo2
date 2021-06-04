@@ -23,28 +23,17 @@ Directorio >> agregar: unObjeto [
 Directorio >> archivoMasGrande [
 	"Retorna el archivo con mayor cantidad de bytes en cualquier nivel del filesystem contenido por directorio receptor."
 
-	^ contenido
-		detectMax: [ :d | 
-			d esDirectorio
-				ifTrue: [ d archivoMasGrande ]
-				ifFalse: [ d tamaño ] ]
+
+	^ (contenido collect: [ :arch | arch archivoMasGrande ])
+		detectMax: [ :arch | arch tamañoTotalOcupado ]
 ]
 
 { #category : #operations }
 Directorio >> archivoMasNuevo [
 	"Retorna el archivo con fecha de creacion mas reciente en cualquier nivel del filesystem contenido por directorio receptor"
 
-	"^ contenido
-		detectMin: [ :d | 
-			d esDirectorio
-				ifTrue: [ d contenido detectMin: [ :ar | ar archivoMasNuevo ] ]
-				ifFalse: [ :a | a fechaCreacion ] ]"
-
-	^ contenido
-		detectMax: [ :d | 
-			d esDirectorio
-				ifTrue: [ d archivoMasNuevo ]
-				ifFalse: [ d fechaCreacion ] ]
+	^ (contenido collect: [ :arch | arch archivoMasGrande ])
+		detectMax: [ :arch | arch fechaCreacion ]
 ]
 
 { #category : #operations }
@@ -75,15 +64,20 @@ Directorio >> esDirectorio [
 ]
 
 { #category : #operations }
-Directorio >> imprimirPathEn: unString con: unNumero [
-	| arc tmp |
-	arc := OrderedCollection new.
-	self esDirectorio
-		ifTrue: [ tmp := unString , '/' , self nombre.
-			arc := self contenido reject: [ :a | a esDirectorio ].
-			self imprimirPathEn: tmp con: arc size ].
-	^ unString , ' (' , unNumero , ' archivos)'
-	
+Directorio >> imprimirPathEn: unString [
+	| tmp |
+	tmp := WriteStream on: String new.
+	tmp << (unString , '/' , nombre).
+	self archivos
+		ifNotEmpty: [ tmp << (' (' , self archivos size asString , ' archivos)') ].
+	self directorio
+		ifNotEmpty: [ self directorio
+				do: [ :dir | 
+					tmp
+						<< '';
+						cr.
+					tmp << (dir imprimirPathEn: unString , '/' , nombre) ] ].
+	^ tmp contents
 ]
 
 { #category : #initialization }
@@ -103,8 +97,7 @@ Directorio >> initializeConNombre: unString yFechaCreacion: unaFecha [
 Directorio >> listadoDeContenido [
 	| listado |
 	listado := ''.
-	^ self imprimirPathEn: listado con: 0 
-	
+	^ self imprimirPathEn: listado 
 ]
 
 { #category : #accessing }

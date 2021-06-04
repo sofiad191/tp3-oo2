@@ -12,6 +12,12 @@ Archivo class >> llamado: unString creadoEl: unaFecha kBytes: unNumero [
 ]
 
 { #category : #operations }
+Archivo >> archivoMasGrande [ 
+
+^self
+]
+
+{ #category : #operations }
 Archivo >> esDirectorio [
 	^ false
 ]

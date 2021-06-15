@@ -23,9 +23,8 @@ Directorio >> agregar: unObjeto [
 Directorio >> archivoMasGrande [
 	"Retorna el archivo con mayor cantidad de bytes en cualquier nivel del filesystem contenido por directorio receptor."
 
-
 	^ (contenido collect: [ :arch | arch archivoMasGrande ])
-		detectMax: [ :arch | arch tamañoTotalOcupado ]
+		detectMax: [ :arch | arch ifNotNil: [ arch tamañoTotalOcupado ] ]
 ]
 
 { #category : #operations }

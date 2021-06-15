@@ -61,6 +61,8 @@ DirectorioTest >> setUp [
 { #category : #tests }
 DirectorioTest >> testArchivoMasGrande [
 	| archivo |
+	archivo := vacio archivoMasGrande.
+	self assert: archivo equals: nil.
 	archivo := conUnArchivo archivoMasGrande.
 	self assert: archivo equals: config.
 	archivo := conVariosArchivos archivoMasGrande.
@@ -72,6 +74,8 @@ DirectorioTest >> testArchivoMasGrande [
 { #category : #tests }
 DirectorioTest >> testArchivoMasNuevo [
 	| archivo |
+		archivo := vacio archivoMasNuevo.
+	self assert: archivo equals: nil.
 	archivo := conUnArchivo archivoMasNuevo.
 	self assert: archivo equals: config.
 	archivo := conVariosArchivos archivoMasNuevo.
@@ -98,6 +102,8 @@ DirectorioTest >> testListadoDeContenido [
 { #category : #tests }
 DirectorioTest >> testTamañoTotalOcupado [
 	| tam |
+		tam := vacio tamañoTotalOcupado.
+	self assert: tam equals: 32.
 	tam := conUnArchivo tamañoTotalOcupado.
 	self assert: tam equals: 160.
 	tam := conVariosArchivos tamañoTotalOcupado.

@@ -18,6 +18,11 @@ Archivo >> archivoMasGrande [
 ]
 
 { #category : #operations }
+Archivo >> archivoMasNuevo [
+^self  
+]
+
+{ #category : #operations }
 Archivo >> esDirectorio [
 	^ false
 ]

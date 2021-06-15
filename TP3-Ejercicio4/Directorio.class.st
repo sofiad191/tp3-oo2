@@ -32,7 +32,7 @@ Directorio >> archivoMasGrande [
 Directorio >> archivoMasNuevo [
 	"Retorna el archivo con fecha de creacion mas reciente en cualquier nivel del filesystem contenido por directorio receptor"
 
-	^ (contenido collect: [ :arch | arch archivoMasGrande ])
+	^ (contenido collect: [ :arch | arch archivoMasNuevo ])
 		detectMax: [ :arch | arch fechaCreacion ]
 ]
 

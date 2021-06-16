@@ -27,6 +27,11 @@ Archivo >> esDirectorio [
 	^ false
 ]
 
+{ #category : #operations }
+Archivo >> imprimirPath: path En: stream [
+	^''
+]
+
 { #category : #initialization }
 Archivo >> initialize [ 	
 super initialize

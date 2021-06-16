@@ -32,7 +32,7 @@ Directorio >> archivoMasNuevo [
 	"Retorna el archivo con fecha de creacion mas reciente en cualquier nivel del filesystem contenido por directorio receptor"
 
 	^ (contenido collect: [ :arch | arch archivoMasNuevo ])
-		detectMax: [ :arch | arch fechaCreacion ]
+		detectMax: [ :arch | arch ifNotNil: [ arch fechaCreacion  ] ]
 ]
 
 { #category : #operations }
@@ -44,6 +44,14 @@ Directorio >> archivos [
 { #category : #accessing }
 Directorio >> contenido [
 ^contenido
+]
+
+{ #category : #'as yet unclassified' }
+Directorio >> cuantosArchivos [
+	contenido isEmpty
+		ifTrue: [ ^ '' ];
+		ifFalse:
+				[ ^ ' (' , (self archivos size) asString , ' archivos)' ]
 ]
 
 { #category : #operations }
@@ -63,20 +71,13 @@ Directorio >> esDirectorio [
 ]
 
 { #category : #operations }
-Directorio >> imprimirPathEn: unString [
-	| tmp |
-	tmp := WriteStream on: String new.
-	tmp << (unString , '/' , nombre).
-	self archivos
-		ifNotEmpty: [ tmp << (' (' , self archivos size asString , ' archivos)') ].
-	self directorio
-		ifNotEmpty: [ self directorio
-				do: [ :dir | 
-					tmp
-						<< '';
-						cr.
-					tmp << (dir imprimirPathEn: unString , '/' , nombre) ] ].
-	^ tmp contents
+Directorio >> imprimirPath: path En: stream [
+	| newPath |
+	newPath := path , '/' , nombre.
+	stream << (newPath , self cuantosArchivos) asString.
+	stream cr.
+	contenido do: [ :each | each imprimirPath: newPath En: stream ].
+	^ stream
 ]
 
 { #category : #initialization }
@@ -94,9 +95,11 @@ Directorio >> initializeConNombre: unString yFechaCreacion: unaFecha [
 
 { #category : #operations }
 Directorio >> listadoDeContenido [
-	| listado |
-	listado := ''.
-	^ self imprimirPathEn: listado 
+	| path stream |
+	path := ''.
+	stream := WriteStream on: String new.
+	stream := self imprimirPath: path En: stream.
+	^ stream contents truncateTo: stream contents size - 1
 ]
 
 { #category : #accessing }

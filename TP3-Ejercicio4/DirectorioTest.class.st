@@ -31,6 +31,7 @@ DirectorioTest >> setUp [
 		llamado: 'config.bak'
 		creadoEl: '2016-04-02' asDate
 		kBytes: 128.
+	
 	conUnArchivo agregar: config.	"Directorio con varios archivos, pero sin subdirectorios"
 	conVariosArchivos := Directorio llamado: 'tmp' creadoEl: date.
 	grande := Archivo
@@ -103,10 +104,9 @@ DirectorioTest >> setUp [
 						creadoEl: '2016-02-13' asDate
 						kBytes: 4000000);
 				yourself).
-				
 	conUnDirectorioVacio := Directorio llamado: 'prueba' creadoEl: date.
-	conUnDirectorioVacio agregar: (Directorio llamado: 'fotos' creadoEl: '2016-04-02' asDate)
-	
+	conUnDirectorioVacio
+		agregar: (Directorio llamado: 'fotos' creadoEl: '2016-04-02' asDate)
 ]
 
 { #category : #tests }
@@ -116,12 +116,13 @@ DirectorioTest >> testArchivoMasGrande [
 	self assert: archivo equals: nil.
 	archivo := conUnArchivo archivoMasGrande.
 	self assert: archivo equals: config.
+	self assert: archivo tamaño equals: 128.
 	archivo := conVariosArchivos archivoMasGrande.
 	self assert: archivo equals: grande.
 	archivo := conSubdirectorios archivoMasGrande.
 	self assert: archivo equals: backup2015.
-	archivo := conUnDirectorioVacio archivoMasGrande .
-	self assert: archivo equals: nil.
+	archivo := conUnDirectorioVacio archivoMasGrande.
+	self assert: archivo equals: nil
 ]
 
 { #category : #tests }
@@ -131,6 +132,7 @@ DirectorioTest >> testArchivoMasNuevo [
 	self assert: archivo equals: nil.
 	archivo := conUnArchivo archivoMasNuevo.
 	self assert: archivo equals: config.
+	self assert: archivo fechaCreacion equals: ('2016-04-02' asDate).
 	archivo := conVariosArchivos archivoMasNuevo.
 	self assert: archivo equals: grande.
 	archivo := conSubdirectorios archivoMasNuevo.

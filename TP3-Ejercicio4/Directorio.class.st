@@ -21,16 +21,12 @@ Directorio >> agregar: unObjeto [
 
 { #category : #operations }
 Directorio >> archivoMasGrande [
-	"Retorna el archivo con mayor cantidad de bytes en cualquier nivel del filesystem contenido por directorio receptor."
-
 	^ (contenido collect: [ :arch | arch archivoMasGrande ])
 		detectMax: [ :arch | arch ifNotNil: [ arch tamañoTotalOcupado ] ]
 ]
 
 { #category : #operations }
 Directorio >> archivoMasNuevo [
-	"Retorna el archivo con fecha de creacion mas reciente en cualquier nivel del filesystem contenido por directorio receptor"
-
 	^ (contenido collect: [ :arch | arch archivoMasNuevo ])
 		detectMax: [ :arch | arch ifNotNil: [ arch fechaCreacion  ] ]
 ]
@@ -46,7 +42,7 @@ Directorio >> contenido [
 ^contenido
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #operations }
 Directorio >> cuantosArchivos [
 	contenido isEmpty
 		ifTrue: [ ^ '' ];
